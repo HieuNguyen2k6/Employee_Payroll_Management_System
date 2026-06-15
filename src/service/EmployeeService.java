@@ -6,6 +6,7 @@ package service;
 
 import files.EmployeeFile;
 import java.util.ArrayList;
+import java.util.List;
 import model.Employee;
 
 /**
@@ -23,5 +24,18 @@ public class EmployeeService {
     
     public void add(Employee emp){
         empList.add(emp);
+    }
+    
+    public List<Employee> getAll() {
+        return empList;
+    }
+    
+    public Employee findById(String code) {
+        for (Employee s : empList) {
+            if (s.getId().equalsIgnoreCase(code)) {
+                return s;
+            }
+        }
+        return null;
     }
 }

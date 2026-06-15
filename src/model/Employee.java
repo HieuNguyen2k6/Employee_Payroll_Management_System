@@ -13,13 +13,13 @@ import utils.EmployeeRole;
 public class Employee {
     private String id;
     private String name;
-    private EmployeeRole role;
+    private EmployeeRole.Role role;
     private double baseSalary;
     private int workingDays;
     private double bonus;
-    private boolean status;
+    private String status;
 
-    public Employee(String id, String name, EmployeeRole role, double baseSalary, int workingDays, double bonus) {
+    public Employee(String id, String name, EmployeeRole.Role role, double baseSalary, int workingDays, double bonus) {
         this.id = id;
         this.name = name;
         this.role = role;
@@ -28,7 +28,7 @@ public class Employee {
         this.bonus = bonus;
     }
 
-    public Employee(String id, String name, EmployeeRole role, double baseSalary, int workingDays, double bonus, boolean status) {
+    public Employee(String id, String name, EmployeeRole.Role role, double baseSalary, int workingDays, double bonus, String status) {
         this.id = id;
         this.name = name;
         this.role = role;
@@ -47,7 +47,7 @@ public class Employee {
         return name;
     }
 
-    public EmployeeRole getRole() {
+    public EmployeeRole.Role getRole() {
         return role;
     }
 
@@ -63,8 +63,8 @@ public class Employee {
         return bonus;
     }
 
-    public boolean isStatus() {
-        return status;
+    public String getStatus() {
+        return status.toUpperCase();
     }
     
     //setter
@@ -76,7 +76,7 @@ public class Employee {
         this.name = name;
     }
 
-    public void setRole(EmployeeRole role) {
+    public void setRole(EmployeeRole.Role role) {
         this.role = role;
     }
 
@@ -92,7 +92,7 @@ public class Employee {
         this.bonus = bonus;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
     

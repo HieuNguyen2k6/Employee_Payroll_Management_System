@@ -49,11 +49,25 @@ public class EmployeeRole {
         }
     }
 
-    public static String[] getListRole() {
-        String[] listRole = {"Developer", 
-            "Tester", 
-            "Manager", 
-            "HR"};
-        return listRole;
+    public static void printRoleMenu() {
+        Role[] roles = Role.values(); // Lấy ra mảng các giá trị trong Enum
+        System.out.println("--- Select Employee Role ---");
+        for (int i = 0; i < roles.length; i++) {
+            // In ra dạng: 1. Developer, 2. Tester,...
+            System.out.println((i + 1) + ". " + getStringRole(roles[i]));
+        }
+        System.out.println("----------------------------");
+    }
+
+    /**
+     * Hàm trả về Role tương ứng với số người dùng chọn (1 -> DEVERLOPER, 2 -> TESTER,...)
+     */
+    public static EmployeeRole.Role getRoleByChoice(int choice) {
+        Role[] roles = Role.values();
+        // Kiểm tra nếu số nhập nằm ngoài phạm vi (ví dụ nhập 5, 6, 0...)
+        if (choice < 1 || choice > roles.length) {
+            return null; 
+        }
+        return roles[choice - 1]; // Trả về role tương ứng (vì mảng chạy từ 0 nên lấy choice - 1)
     }
 }   

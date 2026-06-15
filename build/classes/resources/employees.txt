@@ -1,4 +1,4 @@
-E003, Emily Lloyd Developer; 1300, 21,, 250, active
+E003, Emily Lloyd, Developer, 1300, 21, 250, active
 E004, David Miller, Developer, 1300, 21, 250, active
 E004, Emma Stone, Tester, 1870, 16, 180, active
 E005, Emma Wilson, Tester, 950, 20, 100, active

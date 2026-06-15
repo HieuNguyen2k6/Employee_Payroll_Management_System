@@ -5,12 +5,10 @@
 package files;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import model.Employee;
 import utils.EmployeeRole;
@@ -59,28 +57,41 @@ public class EmployeeFile {
                 double bonus = Double.parseDouble(data[5].trim());
 
                 // CHUYỂN STRING SANG BOOLEAN STATUS (true nếu chuỗi là "true", ngược lại là false)
-                boolean status = Boolean.parseBoolean(data[6].trim());
+                String status = data[6].trim();
 
                 // Khởi tạo và thêm nhân viên vào danh sách
                 Employee emp = new Employee(id, name, role, baseSalary, workingDays, bonus, status);
                 empList.add(emp);
             }
         } catch (Exception e) {
-            System.out.println("Lỗi đọc file: " + e.getMessage());
+            System.out.println(">> [ERROR] read file: " + e.getMessage());
         }
-        System.out.println(">> Loaded " + empList.size() + " registered students from file.");
+        System.out.println(">> Loaded " + empList.size() + " registered employee from file.");
         return empList;
     }
 
-    public void saveEmployeeToFile(ArrayList<Employee> studentList) {
-        if (studentList.isEmpty()) {
+    public void saveEmployeeToFile(ArrayList<Employee> empList) {
+        if (empList == null || empList.isEmpty()) {
             System.out.println(">> Nothing to save! The registration list is empty.");
             return;
         }
-        try (
-                 FileOutputStream fos = new FileOutputStream(filePath);  ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-            oos.writeObject(studentList);
-            System.out.println("Registration data has been successfully saved.");
+        try ( BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
+            for (Employee emp : empList) {
+                // Ghép các thuộc tính thành một dòng chữ, cách nhau bằng dấu phẩy
+                String line = String.format("%s,%s,%s,%.2f,%d,%.2f,%s",
+                        emp.getId(),
+                        emp.getName(),
+                        emp.getRole(),
+                        emp.getBaseSalary(),
+                        emp.getWorkingDays(),
+                        emp.getBonus(),
+                            emp.getStatus()
+                );
+
+                bw.write(line);
+                bw.newLine(); // Xuống dòng cho nhân viên tiếp theo
+            }
+            System.out.println(">> Data has been successfully saved.");
         } catch (Exception e) {
             System.err.println(">> [ERROR] Unable to save file: " + e.getMessage());
         }
