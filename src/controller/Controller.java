@@ -29,7 +29,7 @@ public class Controller {
     }
 
     public void loadEmp() {
-        this.empList = new EmployeeService(new EmployeeFile());
+        this.empList.loadDataFromFile();
         view.setEmployeeService(this.empList);
     }
 
@@ -130,15 +130,15 @@ public class Controller {
         int workingDay = enterWorkingDay();
         double bonus = enterBonus();
         String active = enterStatus();
-        
+
         empList.add(new Employee(id, name, role, basicSal, workingDay, bonus, active));
         view.showMessage(">> Add Employee successful!");
     }
-    
-    public void displayEmp(){
+
+    public void displayEmp() {
         List<Employee> list = empList.getAll();
         if (list.isEmpty()) {
-            view.showMessage("\n>> No students have registered yet");
+            view.showMessage("\n>> No employee have registered yet");
         } else {
             view.showList(list);
         }
