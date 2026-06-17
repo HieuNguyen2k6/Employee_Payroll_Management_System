@@ -64,7 +64,7 @@ public class Employee {
     }
 
     public String getStatus() {
-        return status.toUpperCase();
+        return status != null ? status.toUpperCase() : "INACTIVE";
     }
     
     //setter

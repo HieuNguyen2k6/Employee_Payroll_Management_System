@@ -5,6 +5,7 @@
 package controller;
 
 import files.EmployeeFile;
+import java.util.ArrayList;
 import java.util.List;
 import model.Employee;
 import service.EmployeeService;
@@ -36,7 +37,7 @@ public class Controller {
     public String enterId() {
         String id;
         while (true) {
-            id = view.readString("Enter Student Id: ");
+            id = view.readString("Enter Employee Id: ");
             id = id.toUpperCase().trim();
             if (!id.isEmpty()) {
                 if (Validator.validEmpId(id)) {
@@ -133,6 +134,146 @@ public class Controller {
 
         empList.add(new Employee(id, name, role, basicSal, workingDay, bonus, active));
         view.showMessage(">> Add Employee successful!");
+    }
+
+    public void updateEmp() {
+        String id;
+        boolean update = false;
+        id = view.readString("\nEnter Employee Id to update: ");
+        if (Validator.validEmpId(id)) {
+            if (empList.findById(id) != null) {
+                Employee emp = empList.findById(id);
+                while (!update) {
+                    try {
+                        System.out.println("\n===== Employee Information =====");
+                        System.out.println("ID           : " + emp.getId());
+                        System.out.println("Name         : " + emp.getName());
+                        System.out.println("Role         : " + emp.getRole());
+                        System.out.println("Base Salary  : " + String.format("%.0f", emp.getBaseSalary()));
+                        System.out.println("Working Days : " + emp.getWorkingDays());
+                        System.out.println("Bonus        : " + String.format("%,.0f", emp.getBonus()));
+                        System.out.println("Status       : " + emp.getStatus());
+                        System.out.println("-------------------------------");
+                        int choice = view.showUpdateMenu();
+                        switch (choice) {
+                            case 1:
+                                emp.setName(enterName());
+                                view.showMessage(">> Update Name success!!!");
+                                break;
+                            case 2:
+                                emp.setRole(enterRole());
+                                view.showMessage(">> Update Role success!!!");
+                                break;
+                            case 3:
+                                emp.setBaseSalary(enterBaseSal());
+                                view.showMessage(">> Update Base Salary success!!!");
+                                break;
+                            case 4:
+                                emp.setWorkingDays(enterWorkingDay());
+                                view.showMessage(">> Update Working Days success!!!");
+                                break;
+                            case 5:
+                                emp.setBonus(enterBonus());
+                                view.showMessage(">> Update Bonus success!!!");
+                                break;
+                            case 6:
+                                emp.setStatus(enterStatus());
+                                view.showMessage(">> Update Status success!!!");
+                                break;
+                            case 7:
+                                update = true;
+                                break;
+                            default:
+                                view.showMessage(">> This function is not available");
+                        }
+                    } catch (Exception e) {
+                        view.showMessage(">> Invalid input. Please try again.");
+                    }
+                }
+            } else {
+                view.showMessage(">> This employee has not registered yet.");
+            }
+        } else {
+            view.showMessage(">> Invalid! ID format (E001)!!!");
+        }
+    }
+
+    public void removeEmp() {
+        String id;
+        id = view.readString("\nEnter Employee Id to remove: ");
+        if (Validator.validEmpId(id)) {
+            if (empList.findById(id) != null) {
+                Employee emp = empList.findById(id);
+                System.out.println("\n===== Employee Information =====");
+                System.out.println("ID           : " + emp.getId());
+                System.out.println("Name         : " + emp.getName());
+                System.out.println("Role         : " + emp.getRole());
+                System.out.println("Base Salary  : " + String.format("%.0f", emp.getBaseSalary()));
+                System.out.println("Working Days : " + emp.getWorkingDays());
+                System.out.println("Bonus        : " + String.format("%,.0f", emp.getBonus()));
+                System.out.println("Status       : " + emp.getStatus());
+                System.out.println("-------------------------------");
+
+                String confirm = view.readString("Are you sure you want to delete this registration? (Y/N): ");
+                if (confirm.equalsIgnoreCase("Y")) {
+                    empList.delete(emp);
+                    view.showMessage(">> Deleted successfully!");
+                } else {
+                    view.showMessage(">> Delete canceled.");
+                }
+            } else {
+                view.showMessage(">> This employee has not registered yet.");
+            }
+        } else {
+            view.showMessage(">> Invalid! ID format (E001)!!!");
+        }
+    }
+
+    public void searchEmp() {
+        List<Employee> list = empList.getAll();
+
+        if (list.isEmpty()) {
+            view.showMessage("\n>> No Employee have registered yet");
+        } else {
+            List<Employee> searchResult = new ArrayList<>();
+            String values;
+
+            int choice = view.showSearchMenu();
+            switch (choice) {
+                case 1:
+                    values = view.readString("\nEnter Employee Name: ");
+                    for (Employee emp : list) {
+                        if (emp.getName().toLowerCase().contains(values.toLowerCase())) {
+                            searchResult.add(emp);
+                        }
+                    }
+                    break;
+                case 2:
+                    EmployeeRole.Role searchRole = enterRole();
+                    for (Employee emp : list) {
+                        if (emp.getRole() == searchRole) {
+                            searchResult.add(emp);
+                        }
+                    }
+                    break;
+                case 3:
+                    values = view.readString("\nEnter Employee Status: ");
+                    for (Employee emp : list) {
+                        if (emp.getStatus().toLowerCase().contains(values.toLowerCase())) {
+                            searchResult.add(emp);
+                        }
+                    }
+                    break;
+                default:
+                    view.showMessage(">> This function is not available");
+            }
+
+            if (!searchResult.isEmpty()) {
+                view.showList(searchResult);
+            } else {
+                view.showMessage(">> No one matches the search criteria!");
+            }
+        }
     }
 
     public void displayEmp() {

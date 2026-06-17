@@ -42,7 +42,7 @@ public class View {
         return Integer.parseInt(sc.nextLine());
     }
 
-    public int showStatusMenu(){
+    public int showStatusMenu() {
         System.out.println("--- Active ---");
         System.out.println("1. Active");
         System.out.println("2. Inactive");
@@ -50,7 +50,32 @@ public class View {
         System.out.print("Your Choice: ");
         return Integer.parseInt(sc.nextLine());
     }
+
+    public int showUpdateMenu() {
+        System.out.println("\n===== Employee Update =====");
+        System.out.println("1. Name");
+        System.out.println("2. Role");
+        System.out.println("3. Base Salary");
+        System.out.println("4. Working Days");
+        System.out.println("5. Bonus");
+        System.out.println("6. Status");
+        System.out.println("7. Quit program");
+        System.out.println("-------------------------------");
+        System.out.print("Your Choice: ");
+        return Integer.parseInt(sc.nextLine());
+    }
     
+    public int showSearchMenu(){
+        System.out.println("\n===== Employee Search =====");
+        System.out.println("1. Name");
+        System.out.println("2. Role");
+        System.out.println("3. Status");
+        System.out.println("4. Quit program");
+        System.out.println("-------------------------------");
+        System.out.print("Your Choice: ");
+        return Integer.parseInt(sc.nextLine());
+    }
+
     public void showList(List<Employee> list) {
         showMessage("\n======================================= Display Employee List =======================================");
         System.out.println("-----------------------------------------------------------------------------------------------------");
@@ -61,7 +86,7 @@ public class View {
         }
         System.out.println("----------------------------------------------------------------------------------------------------");
     }
-    
+
     public double readDouble(String prompt) {
         while (true) {
             try {
@@ -96,7 +121,7 @@ public class View {
             }
         }
     }
-    
+
     public int readChoice(String prompt) {
         System.out.print(prompt);
         String input = sc.nextLine().trim();

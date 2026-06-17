@@ -35,15 +35,15 @@ public class Menu {
                     case 2:
                         empController.addEmp();
                         break;
-//                    case 3:
-//                        studentController.displayRegistration();
-//                        break;
-//                    case 4:
-//                        studentController.deleteRegistration();
-//                        break;
-//                    case 5:
-//                        studentController.searchParticipantsByName();
-//                        break;
+                    case 3:
+                        empController.updateEmp();
+                        break;
+                    case 4:
+                        empController.removeEmp();
+                        break;
+                    case 5:
+                        empController.searchEmp();
+                        break;
 //                    case 6:
 //                        studentController.filterByCampus();
 //                        break;

@@ -43,4 +43,11 @@ public class EmployeeService {
         }
         return null;
     }
+    
+    public boolean delete(Employee emp) {
+        if (emp != null) {
+            return empList.remove(emp);
+        }
+        return false;
+    }
 }
