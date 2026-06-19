@@ -24,6 +24,7 @@ public class Menu {
     }
     
     public void displayMenu() {
+        boolean ischange = false;
         int choice = 0;
         do {
             try {
@@ -34,28 +35,31 @@ public class Menu {
                         break;
                     case 2:
                         empController.addEmp();
+                        ischange = true;
                         break;
                     case 3:
                         empController.updateEmp();
+                        ischange = true;
                         break;
                     case 4:
                         empController.removeEmp();
+                        ischange = true;
                         break;
                     case 5:
                         empController.searchEmp();
                         break;
-//                    case 6:
-//                        studentController.filterByCampus();
-//                        break;
+                    case 6:
+                        empController.calculateEmp();
+                        break;
                     case 7:
                         empController.displayEmp();
                         break;
-//                    case 8:
-//                        studentController.saveData();
-//                        break;
-//                    case 9:
-//                        studentController.exitSystem();
-//                        break;
+                    case 8:
+                        empController.saveData();
+                        break;
+                    case 9:
+                        empController.exitSystem(ischange);
+                        break;
                     default:
                         System.out.println(">> This function is not available");
                         break;

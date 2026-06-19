@@ -18,6 +18,7 @@ public class Employee {
     private int workingDays;
     private double bonus;
     private String status;
+    private double salary;
 
     public Employee(String id, String name, EmployeeRole.Role role, double baseSalary, int workingDays, double bonus) {
         this.id = id;
@@ -67,6 +68,10 @@ public class Employee {
         return status != null ? status.toUpperCase() : "INACTIVE";
     }
     
+    public double getSalary(){
+        return salary;
+    }
+    
     //setter
     public void setId(String id) {
         this.id = id;
@@ -96,8 +101,11 @@ public class Employee {
         this.status = status;
     }
     
+    public void setSalary(double salary){
+        this.salary = salary;
+    }
     //calculate
-    public double calSalary(){
+    public double calSalary(double baseSalary, int workingDays, double bonus) {
         return baseSalary * workingDays + bonus;
     }
 }

@@ -22,7 +22,7 @@ public class EmployeeRole {
         String str = "";
         switch (role) {
             case DEVERLOPER:
-                str = "Developer";
+                str = "Deverloper";
                 break;
             case TESTER:
                 str = "Tester";
@@ -38,12 +38,14 @@ public class EmployeeRole {
     }
 
     public static EmployeeRole.Role getRole(String role) {
-        if (role.equals("Developer")) {
+        if (role.equalsIgnoreCase("Deverloper")) {
             return Role.DEVERLOPER;
-        } else if (role.equals("Tester")) {
+        } else if (role.equalsIgnoreCase("Tester")) {
             return Role.TESTER;
-        } else if (role.equals("Manager")) {
+        } else if (role.equalsIgnoreCase("Manager")) {
             return Role.MANAGER;
+        }else if (role.equalsIgnoreCase("Hr")) {
+            return Role.HR;
         } else {
             return Role.HR;
         }

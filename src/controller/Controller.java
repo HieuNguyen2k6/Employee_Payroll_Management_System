@@ -7,6 +7,7 @@ package controller;
 import files.EmployeeFile;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import model.Employee;
 import service.EmployeeService;
 import utils.EmployeeRole;
@@ -21,7 +22,6 @@ public class Controller {
 
     private View view;
     private EmployeeService empList;
-    private boolean isChanged = false;
 
     public Controller(View view) {
         this.view = view;
@@ -232,48 +232,81 @@ public class Controller {
     public void searchEmp() {
         List<Employee> list = empList.getAll();
 
+        boolean ischange = false;
         if (list.isEmpty()) {
             view.showMessage("\n>> No Employee have registered yet");
         } else {
             List<Employee> searchResult = new ArrayList<>();
             String values;
-
-            int choice = view.showSearchMenu();
-            switch (choice) {
-                case 1:
-                    values = view.readString("\nEnter Employee Name: ");
-                    for (Employee emp : list) {
-                        if (emp.getName().toLowerCase().contains(values.toLowerCase())) {
-                            searchResult.add(emp);
-                        }
+            while (!ischange) {
+                try {
+                    int choice = view.showSearchMenu();
+                    switch (choice) {
+                        case 1:
+                            values = view.readString("\nEnter Employee Id: ");
+                            for (Employee emp : list) {
+                                if (emp.getId().toLowerCase().contains(values.toLowerCase())) {
+                                    searchResult.add(emp);
+                                }
+                            }
+                            break;
+                        case 2:
+                            values = view.readString("\nEnter Employee Name: ");
+                            for (Employee emp : list) {
+                                if (emp.getName().toLowerCase().contains(values.toLowerCase())) {
+                                    searchResult.add(emp);
+                                }
+                            }
+                            break;
+                        case 3:
+                            EmployeeRole.Role searchRole = enterRole();
+                            for (Employee emp : list) {
+                                if (emp.getRole() == searchRole) {
+                                    searchResult.add(emp);
+                                }
+                            }
+                            break;
+                        case 4:
+                            values = view.readString("\nEnter Employee Status: ");
+                            for (Employee emp : list) {
+                                if (emp.getStatus().equalsIgnoreCase(values)) {
+                                    searchResult.add(emp);
+                                }
+                            }
+                            break;
+                        case 5:
+                            ischange = true;
+                            break;
+                        default:
+                            view.showMessage(">> This function is not available");
                     }
-                    break;
-                case 2:
-                    EmployeeRole.Role searchRole = enterRole();
-                    for (Employee emp : list) {
-                        if (emp.getRole() == searchRole) {
-                            searchResult.add(emp);
+                    if (!searchResult.isEmpty()) {
+                        view.showList(searchResult);
+                    } else {
+                        if (ischange) {
+                            break;
                         }
+                        view.showMessage(">> No one matches the search criteria!");
                     }
-                    break;
-                case 3:
-                    values = view.readString("\nEnter Employee Status: ");
-                    for (Employee emp : list) {
-                        if (emp.getStatus().toLowerCase().contains(values.toLowerCase())) {
-                            searchResult.add(emp);
-                        }
-                    }
-                    break;
-                default:
-                    view.showMessage(">> This function is not available");
-            }
-
-            if (!searchResult.isEmpty()) {
-                view.showList(searchResult);
-            } else {
-                view.showMessage(">> No one matches the search criteria!");
+                } catch (Exception e) {
+                    view.showMessage(">> Invalid input. Please try again.");
+                }
             }
         }
+    }
+
+    public void calculateEmp() {
+        List<Employee> list = empList.getAll();
+
+        for (Employee emp : list) {
+            double calSalary = emp.calSalary(emp.getBaseSalary(), emp.getWorkingDays(), emp.getBonus());
+            emp.setSalary(calSalary);
+        }
+        view.showSalary(list);
+    }
+
+    public void saveData() {
+        empList.save();
     }
 
     public void displayEmp() {
@@ -284,4 +317,24 @@ public class Controller {
             view.showList(list);
         }
     }
+    
+    public void exitSystem(boolean isChange) {
+        if (isChange) {
+            String response = view.readString("Do you want to save the changes before exiting? (Y/N): ");
+            if (response.equalsIgnoreCase("Y")) {
+                saveData();
+                view.showMessage("Data saved. Goodbye!");
+                System.exit(0);
+            } else if (response.equalsIgnoreCase("N")) {
+                String confirm = view.readString("You have unsaved changes. Are you sure you want to exit without saving? (Y/N): ");
+                if (confirm.equalsIgnoreCase("Y")) {
+                    view.showMessage("Goodbye!");
+                    System.exit(0);
+                }
+            }
+        } else {
+            view.showMessage("Goodbye!");
+            System.exit(0);
+        }
+    }            
 }
