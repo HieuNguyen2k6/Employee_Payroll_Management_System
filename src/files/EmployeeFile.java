@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.List;
 import model.Employee;
 import utils.EmployeeRole;
 
@@ -17,16 +18,13 @@ import utils.EmployeeRole;
  *
  * @author Hiu
  */
-public class EmployeeFile {
+public class EmployeeFile implements IFileReadWrite<Employee>{
 
-    private final String filePath;
+    private final String filePath = "src/resources/employees.txt";
 
-    public EmployeeFile() {
-        this.filePath = "src/resources/employees.txt";
-    }
-
-    public ArrayList<Employee> loadFile() {
-        ArrayList<Employee> empList = new ArrayList<>();
+    @Override
+    public List<Employee> loadFromFile() {
+        List<Employee> empList = new ArrayList<>();
 
         File file = new File(filePath);
 
@@ -34,7 +32,7 @@ public class EmployeeFile {
             return empList;
         }
 
-        try ( BufferedReader br = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
                 if (line.trim().isEmpty()) {
@@ -70,12 +68,9 @@ public class EmployeeFile {
         return empList;
     }
 
-    public void saveEmployeeToFile(ArrayList<Employee> empList) {
-        if (empList == null || empList.isEmpty()) {
-            System.out.println(">> Nothing to save! The registration list is empty.");
-            return;
-        }
-        try ( BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
+    @Override
+    public void saveToFile(List<Employee> empList) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
             for (Employee emp : empList) {
                 // Ghép các thuộc tính thành một dòng chữ, cách nhau bằng dấu phẩy
                 String line = String.format("%s,%s,%s,%.2f,%d,%.2f,%s",
@@ -85,7 +80,7 @@ public class EmployeeFile {
                         emp.getBaseSalary(),
                         emp.getWorkingDays(),
                         emp.getBonus(),
-                            emp.getStatus()
+                        emp.getStatus()
                 );
 
                 bw.write(line);

@@ -16,14 +16,12 @@ import service.EmployeeService;
 public class View {
 
     private final Scanner sc;
-    private EmployeeService empList;
 
     public View(Scanner sc) {
         this.sc = sc;
     }
 
     public void setEmployeeService(EmployeeService empList) {
-        this.empList = empList;
     }
 
     public int showMenu() {
@@ -79,7 +77,7 @@ public class View {
 
     public void showList(List<Employee> list) {
         showMessage("\n======================================= Display Employee List =======================================");
-        System.out.println("--------------------------------------------------------------------------------    ---------------------");
+        System.out.println("-----------------------------------------------------------------------------------------------------");
         System.out.printf("%-10s | %-20s | %-10s | %-10s | %-10s | %-10s | %-10s \n", "ID", "Name", "Role", "Base Salary", "Working Days", "Bonus", "Status");
         System.out.println("-----------------------------------------------------------------------------------------------------");
         for (Employee s : list) {

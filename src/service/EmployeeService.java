@@ -4,7 +4,7 @@
  */
 package service;
 
-import files.EmployeeFile;
+import files.IFileReadWrite;
 import java.util.ArrayList;
 import java.util.List;
 import model.Employee;
@@ -15,16 +15,16 @@ import model.Employee;
  */
 public class EmployeeService {
 
-    private ArrayList<Employee> empList;
-    private EmployeeFile empFile;
+    private List<Employee> empList;
+    private IFileReadWrite<Employee> empFile;
 
-    public EmployeeService(EmployeeFile empFile) {
+    public EmployeeService(IFileReadWrite<Employee> empFile) {
         this.empFile = empFile;
         this.empList = new ArrayList<>();
     }
-
+    
     public void loadDataFromFile() {
-        this.empList = empFile.loadFile();
+        this.empList = empFile.loadFromFile();
     }
 
     public void add(Employee emp) {
@@ -52,6 +52,6 @@ public class EmployeeService {
     }
 
     public void save() {
-        empFile.saveEmployeeToFile(empList);
+        empFile.saveToFile(empList);
     }
 }

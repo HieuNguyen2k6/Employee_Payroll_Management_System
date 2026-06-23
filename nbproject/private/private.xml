@@ -5,10 +5,14 @@
         <group>
             <file>file:/C:/Users/ACER/OneDrive/Desktop/Homework_C/LAP211/EmployeePayrollManagementSystem/src/service/EmployeeService.java</file>
             <file>file:/C:/Users/ACER/OneDrive/Desktop/Homework_C/LAP211/EmployeePayrollManagementSystem/src/controller/Main.java</file>
+            <file>file:/C:/Users/ACER/OneDrive/Desktop/Homework_C/LAP211/EmployeePayrollManagementSystem/src/files/IFileReadWrite.java</file>
             <file>file:/C:/Users/ACER/OneDrive/Desktop/Homework_C/LAP211/EmployeePayrollManagementSystem/src/model/Employee.java</file>
             <file>file:/C:/Users/ACER/OneDrive/Desktop/Homework_C/LAP211/EmployeePayrollManagementSystem/src/view/Menu.java</file>
+            <file>file:/C:/Users/ACER/OneDrive/Desktop/Homework_C/LAP211/EmployeePayrollManagementSystem/src/utils/Inputer.java</file>
             <file>file:/C:/Users/ACER/OneDrive/Desktop/Homework_C/LAP211/EmployeePayrollManagementSystem/src/utils/EmployeeRole.java</file>
+            <file>file:/C:/Users/ACER/OneDrive/Desktop/Homework_C/LAP211/EmployeePayrollManagementSystem/src/utils/Validator.java</file>
             <file>file:/C:/Users/ACER/OneDrive/Desktop/Homework_C/LAP211/EmployeePayrollManagementSystem/src/files/EmployeeFile.java</file>
+            <file>file:/C:/Users/ACER/OneDrive/Desktop/Homework_C/LAP211/EmployeePayrollManagementSystem/src/resources/employees.txt</file>
             <file>file:/C:/Users/ACER/OneDrive/Desktop/Homework_C/LAP211/EmployeePayrollManagementSystem/src/controller/Controller.java</file>
             <file>file:/C:/Users/ACER/OneDrive/Desktop/Homework_C/LAP211/EmployeePayrollManagementSystem/src/view/View.java</file>
         </group>

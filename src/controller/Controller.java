@@ -5,12 +5,13 @@
 package controller;
 
 import files.EmployeeFile;
+import files.IFileReadWrite;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import model.Employee;
 import service.EmployeeService;
 import utils.EmployeeRole;
+import utils.Inputer;
 import utils.Validator;
 import view.View;
 
@@ -19,14 +20,17 @@ import view.View;
  * @author Hiu
  */
 public class Controller {
-
+    private Inputer input;
     private View view;
     private EmployeeService empList;
 
     public Controller(View view) {
         this.view = view;
-        // Khởi tạo luôn empList để tránh lỗi rỗng khi chưa bấm chức năng 1
-        this.empList = new EmployeeService(new EmployeeFile());
+        
+        IFileReadWrite<Employee> empFileHandler = new EmployeeFile();
+        this.empList = new EmployeeService(empFileHandler);
+        
+        this.input = new Inputer(this.view, this.empList);
     }
 
     public void loadEmp() {
@@ -34,103 +38,15 @@ public class Controller {
         view.setEmployeeService(this.empList);
     }
 
-    public String enterId() {
-        String id;
-        while (true) {
-            id = view.readString("Enter Employee Id: ");
-            id = id.toUpperCase().trim();
-            if (!id.isEmpty()) {
-                if (Validator.validEmpId(id)) {
-                    if (empList.findById(id) == null) {
-                        break;
-                    }
-                    view.showMessage(">> ID already exists!");
-                } else {
-                    view.showMessage(">> Invalid! ID format (E001)!!!");
-                }
-            } else {
-                view.showMessage(">> ID cannot be empty!!!");
-            }
-        }
-        return id;
-    }
-
-    public String enterName() {
-        String name;
-        while (true) {
-            name = view.readString("Enter Name: ");
-            if (name.isEmpty()) {
-                view.showMessage(">> Name cannot empty!!!");
-            } else {
-                break;
-            }
-        }
-        return name;
-    }
-
-    public EmployeeRole.Role enterRole() {
-        int choice;
-        EmployeeRole.Role selectedRole = null;
-
-        do {
-            try {
-                // 1. In menu các Role (1. Developer, 2. Tester...)
-                EmployeeRole.printRoleMenu();
-
-                // 2. Đọc số người dùng nhập
-                choice = view.readChoice("Enter your choice (1-4): ");
-
-                // 3. Chuyển số thành Enum tương ứng
-                selectedRole = EmployeeRole.getRoleByChoice(choice);
-
-                if (selectedRole == null) {
-                    view.showMessage(">> Invalid choice! Please select from 1 to 4.");
-                }
-            } catch (Exception e) {
-                view.showMessage(">> Please enter a valid number!");
-                choice = 0; // Gán lại để vòng lặp tiếp tục chạy
-            }
-        } while (selectedRole == null); // Lặp lại nếu chọn sai số
-
-        return selectedRole;
-    }
-
-    public double enterBaseSal() {
-        double basicSal = view.readDouble("Enter Basic Salary: ");
-        return basicSal;
-    }
-
-    public int enterWorkingDay() {
-        int workingDay = view.readInt("Enter Working Days: ");
-        return workingDay;
-    }
-
-    public double enterBonus() {
-        double bonus = view.readDouble("Enter Bonus: ");
-        return bonus;
-    }
-
-    public String enterStatus() {
-        int choice;
-        do {
-            choice = view.showStatusMenu();
-        } while (choice > 2);
-        if (choice == 1) {
-            return "Active";
-        } else {
-            return "Inactive";
-        }
-    }
-
     public void addEmp() {
         view.showMessage("\n===== New Employee =====");
-        String id = enterId();
-        String name = enterName();
-        EmployeeRole.Role role = enterRole();
-        double basicSal = enterBaseSal();
-        int workingDay = enterWorkingDay();
-        double bonus = enterBonus();
-        String active = enterStatus();
+        String id = input.enterId();
+        String name = input.enterName();
+        EmployeeRole.Role role = input.enterRole();
+        double basicSal = input.enterBaseSal();
+        int workingDay = input.enterWorkingDay();
+        double bonus = input.enterBonus();
+        String active = input.enterStatus();
 
         empList.add(new Employee(id, name, role, basicSal, workingDay, bonus, active));
         view.showMessage(">> Add Employee successful!");
@@ -157,27 +73,27 @@ public class Controller {
                         int choice = view.showUpdateMenu();
                         switch (choice) {
                             case 1:
-                                emp.setName(enterName());
+                                emp.setName(input.enterName());
                                 view.showMessage(">> Update Name success!!!");
                                 break;
                             case 2:
-                                emp.setRole(enterRole());
+                                emp.setRole(input.enterRole());
                                 view.showMessage(">> Update Role success!!!");
                                 break;
                             case 3:
-                                emp.setBaseSalary(enterBaseSal());
+                                emp.setBaseSalary(input.enterBaseSal());
                                 view.showMessage(">> Update Base Salary success!!!");
                                 break;
                             case 4:
-                                emp.setWorkingDays(enterWorkingDay());
+                                emp.setWorkingDays(input.enterWorkingDay());
                                 view.showMessage(">> Update Working Days success!!!");
                                 break;
                             case 5:
-                                emp.setBonus(enterBonus());
+                                emp.setBonus(input.enterBonus());
                                 view.showMessage(">> Update Bonus success!!!");
                                 break;
                             case 6:
-                                emp.setStatus(enterStatus());
+                                emp.setStatus(input.enterStatus());
                                 view.showMessage(">> Update Status success!!!");
                                 break;
                             case 7:
@@ -244,6 +160,7 @@ public class Controller {
                     switch (choice) {
                         case 1:
                             values = view.readString("\nEnter Employee Id: ");
+                            searchResult.clear();
                             for (Employee emp : list) {
                                 if (emp.getId().toLowerCase().contains(values.toLowerCase())) {
                                     searchResult.add(emp);
@@ -259,7 +176,7 @@ public class Controller {
                             }
                             break;
                         case 3:
-                            EmployeeRole.Role searchRole = enterRole();
+                            EmployeeRole.Role searchRole = input.enterRole();
                             for (Employee emp : list) {
                                 if (emp.getRole() == searchRole) {
                                     searchResult.add(emp);
@@ -306,6 +223,10 @@ public class Controller {
     }
 
     public void saveData() {
+        if (empList == null) {
+            System.out.println(">> Nothing to save! The registration list is empty.");
+            return;
+        }
         empList.save();
     }
 

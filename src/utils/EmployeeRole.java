@@ -9,9 +9,9 @@ package utils;
  * @author ACER
  */
 public class EmployeeRole {
-
+    
     public enum Role {
-        DEVERLOPER,
+        DEVELOPER,
         TESTER,
         MANAGER,
         HR;
@@ -21,8 +21,8 @@ public class EmployeeRole {
     public static String getStringRole(EmployeeRole.Role role) {
         String str = "";
         switch (role) {
-            case DEVERLOPER:
-                str = "Deverloper";
+            case DEVELOPER:
+                str = "Developer";
                 break;
             case TESTER:
                 str = "Tester";
@@ -38,8 +38,8 @@ public class EmployeeRole {
     }
 
     public static EmployeeRole.Role getRole(String role) {
-        if (role.equalsIgnoreCase("Deverloper")) {
-            return Role.DEVERLOPER;
+        if (role.equalsIgnoreCase("Developer")) {
+            return Role.DEVELOPER;
         } else if (role.equalsIgnoreCase("Tester")) {
             return Role.TESTER;
         } else if (role.equalsIgnoreCase("Manager")) {
@@ -61,9 +61,9 @@ public class EmployeeRole {
         System.out.println("----------------------------");
     }
 
-    /**
-     * Hàm trả về Role tương ứng với số người dùng chọn (1 -> DEVERLOPER, 2 -> TESTER,...)
-     */
+    
+     // Hàm trả về Role tương ứng với số người dùng chọn (1 -> DEVERLOPER, 2 -> TESTER,...)
+     
     public static EmployeeRole.Role getRoleByChoice(int choice) {
         Role[] roles = Role.values();
         // Kiểm tra nếu số nhập nằm ngoài phạm vi (ví dụ nhập 5, 6, 0...)

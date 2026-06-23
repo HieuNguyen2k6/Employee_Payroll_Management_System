@@ -56,6 +56,7 @@ public class Menu {
                         break;
                     case 8:
                         empController.saveData();
+                        ischange = false;
                         break;
                     case 9:
                         empController.exitSystem(ischange);

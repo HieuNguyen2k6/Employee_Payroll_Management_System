@@ -1,14 +1,14 @@
-E003, Emily Lloyd, Developer, 1300, 21, 250, active
-E004, David Miller, Developer, 1300, 21, 250, active
-E004, Emma Stone, Tester, 1870, 16, 180, active
-E005, Emma Wilson, Tester, 950, 20, 100, active
-E006, Frank Brown, HR, 1100, 22, 150, active
-E007, Grace Taylor, Developer, 1250, 24, 300, active
-E008, Henry Anderson, Manager, 2200, 19, 600, active
-E009, Ivy Thomas, Tester, 980, 18, 120, inactive
-E009, Ivy Thomas, Tester, 980, 18, 120, inactive
-E010, Jack Moore, Developer, 1400, 26, 350, active
-E011, Karen Lee, HR, 1050, 20, 80, active
-E012, Leo Martin, Manager, 2100, 17, 500, inactive
-E013, Nina Clark, Developer, 1350, 23, 280, active
-E015, Brooke Guest, Manager, 2050, 25, 380, active
+E003,Emily Lloyd,HR,1300.00,21,250.00,ACTIVE
+E004,David Miller,HR,1300.00,21,250.00,ACTIVE
+E004,Emma Stone,TESTER,1870.00,16,180.00,ACTIVE
+E005,Emma Wilson,TESTER,950.00,20,100.00,ACTIVE
+E006,Frank Brown,HR,1100.00,22,150.00,ACTIVE
+E007,Grace Taylor,HR,1250.00,24,300.00,ACTIVE
+E008,Henry Anderson,MANAGER,2200.00,19,600.00,ACTIVE
+E009,Ivy Thomas,TESTER,980.00,18,120.00,INACTIVE
+E009,Ivy Thomas,TESTER,980.00,18,120.00,INACTIVE
+E010,Jack Moore,HR,1400.00,26,350.00,ACTIVE
+E011,Karen Lee,HR,1050.00,20,80.00,ACTIVE
+E012,Leo Martin,MANAGER,2100.00,17,500.00,INACTIVE
+E013,Nina Clark,HR,1350.00,23,280.00,ACTIVE
+E015,Brooke Guest,MANAGER,2050.00,25,380.00,ACTIVE
